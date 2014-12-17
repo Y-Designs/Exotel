@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<title>Exotest</title>
+<style>
+.call-status{
+	position: fixed;
+	bottom: 2px;
+	right: 2px;
+	width: 300px;
+	background: #000;
+	color: #FFF;
+	padding: 5px;
+}
+.call-status .title{padding: 3px;}
+.call-status .content{
+	display: none;
+	background: #FFF;
+	color: #000;
+	padding: 5px;
+}
+.incoming{
+	color: #FFF;
+	background: #F60;
+}
+.incoming .content{display: block;}
+</style>
+</head>
+<body>
+	<h1>Exotel Call popup example</h1>
+	<p>This is sample demo of how you can handle Exotel incoming call popup in your
+	node.js application. See the code in app.js file.</p>
+	<a href="http://localhost:3000/calling?From=1234567890&To=0987654321&Direction=incoming" target="_blank">Click here</a> to a demo call.
+	<div class="call-status">
+		<div class="title">Call status : Ideal</div>
+		<div class="content"></div>
+	</div>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+		var socket = io();
+		socket.on('call alert', function(callData){
+			//There is an incoming call
+			$(".call-status .title").text("Call status : Incoming");
+			$(".call-status")
+			.addClass("incoming")
+			.find(".content")
+			.text("From : " + callData.From);
+		});
+	</script>
+</body>
+</html>
